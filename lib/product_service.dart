@@ -13,8 +13,9 @@ class ProductService {
       try{
         var response = await http.get(url);
         if(response.statusCode == 200){
+          print(response.body);
           var responseBody = jsonDecode(response.body);
-          List<Product>  productList = responseBody.map((o) => Product.fromJson(o)).toList();
+          List<Product>  productList = List<Product>.from(responseBody.map((o) => Product.fromJson(o))).toList();
           return productList;
         }else{
           throw("Internal Server");

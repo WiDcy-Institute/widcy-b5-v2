@@ -17,27 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    // return Scaffold(
-    //   body: ListView(
-    //     children: [
-    //       Row(
-    //       mainAxisAlignment: MainAxisAlignment.start,
-    //       children: [
-    //           Container(
-    //             alignment: Alignment.center,
-    //             padding: EdgeInsets.all(8),
-    //             child: TextFormField(
-    //             controller: searchController,
-    //             decoration: InputDecoration(border: OutlineInputBorder()),
-    //           ),
-    //           )
-    //       ]
-    //       )
-    //     ],
-    //   ),
-    // );
-
+   
     return Scaffold(
         body: FutureBuilder(
             future: ProductService().loadProductList(),
@@ -55,10 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                           }else{
 
-return Center(
-                          child: Text("Has data"),
-                        );
+              
+                              return ListView.builder(
+                                itemCount: productList.length,
+                                itemBuilder: (context, index) {
 
+                                   Product product = productList[index];
+                                   return Card(
+                                    elevation: 3,
+                                    child: ListTile(
+                                      title: Text("${product.name}"),
+                                      trailing: Text("${product.image}"),
+                                    ),
+                                   );
+
+                                },
+                              );
                           }
                     }
                 }else{
