@@ -18,7 +18,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
 
   int _indexSelected = 0;
   List<Widget> screenList = [
-    ProductScreen(),
+    HomeScreen(),
     SearchScreen(),
     BookScreen(),
     MoreScreen()

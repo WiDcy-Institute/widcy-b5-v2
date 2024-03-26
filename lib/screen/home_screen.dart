@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:widcy2/model/product.dart';
 import 'package:widcy2/service/product_service.dart';
 import 'package:widcy2/widgets/app_search_bar.dart';
+import 'package:widcy2/data/data.dart' as data;
 
 class HomeScreen extends StatefulWidget {
 
@@ -17,24 +18,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   TextEditingController searchController = TextEditingController();
 
 
-  List<String> data = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Elderberry',
-    'Fig',
-    'Grapes',
-    'Honeydew',
-    'Kiwi',
-    'Lemon',
-  ];
-
   List<String> searchResults = [];
 
   void onQueryChanged(String query) {
     setState(() {
-      searchResults = data
+      searchResults = data.subject
           .where((item) => item.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
@@ -52,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: data.length, vsync: this);
+    _tabController = TabController(length: data.subject.length, vsync: this);
   }
 
   @override
@@ -64,21 +52,29 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     
-    List<Tab> tabList = data.map((e) => Tab(text: e),).toList();
-    List<Widget> tabBarViewList = data.map((e) => HomeTab()).toList();
+    List<Tab> tabList = data.subject.map((e) => Tab(text: e),).toList();
+    List<Widget> tabBarViewList = data.subject.map((e) => HomeTab()).toList();
     
    
     return Scaffold(
+      appBar: AppBar(
+        title: Text("WiDcy Institute"),
+        actions: [
+          Icon(Icons.circle_notifications_outlined)
+        ],
+        centerTitle: false,
+        ),
         body: Column(
           children: [
-            Padding(padding: EdgeInsets.only(left: 16, right: 16),
-              child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Explore",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-                Icon(Icons.settings)
-              ],
-            ),),
+            // Padding(padding: EdgeInsets.only(left: 16, right: 16),
+            //   child: Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text("Explore",style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+            //     Icon(Icons.settings)
+            //   ],
+            // ),
+            // ),
 
             // SearchBar(onChanged : onQueryChanged,
             //   hintText: "Search...",
@@ -217,34 +213,54 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
 class HomeTab extends StatelessWidget {
 
-  List<Widget> cardList = List.generate(10, (index) => Card(
-    elevation: 2,
-    child: SizedBox(
-      width: 100,
-      height: 200,
-      // child: FadeInImage.assetNetwork(placeholder: "assets/img/widcy1.jpg", image: "https://cdn.britannica.com/83/78183-004-345353F4/Stack-books.jpg"),
-      child : Image.asset("gw-ob-nonprod-apim.kbprasacbank.com.kh")
-    ),
-  )).toList();
+  
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
+  double widthSize = MediaQuery.of(context).size.width;
+
+  List<Widget> cardListWidget = data.subject.map((e) => Card(
+    elevation: 1,
+    child: SizedBox(
+      width: (widthSize / 2) - 40,
+      height: 300,
+       child: Column(children: [
+        FadeInImage.assetNetwork(placeholder: "assets/img/default_image.jpg", image: "https://www.widcy-institute.com/wp-content/uploads/2023/11/399927046_728506162641065_2818228946556903479_n.jpg"),
+        Text("$e")
+       ]),
+    ),
+  )).toList();
+
+  // List<Widget> cardList = List.generate(2, (index) => Card(
+  //   elevation: 1,
+  //   child: SizedBox(
+  //     width: (widthSize / 2) - 10,
+  //     height: 200,
+  //      child: FadeInImage.assetNetwork(placeholder: "assets/img/default_image.jpg", image: "https://www.widcy-institute.com/wp-content/uploads/2023/11/399927046_728506162641065_2818228946556903479_n.jpg"),
+  //   ),
+  // )).toList();
+
     return Column(
       children: [
       Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: cardList,
+      children: cardListWidget,
     ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: cardList,
-        ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: cardList,
-        )
+        // SizedBox(height: 10,),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: cardListWidget,
+        // ),
+        // SizedBox(height: 10,),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: cardListWidget,
+        // )
       ],
     );
   }

@@ -1,6 +1,7 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:widcy2/screen/home_screen.dart';
 import 'package:widcy2/screen/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,17 +14,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   @override
+  void initState() {
+    super.initState();
+    final route = MaterialPageRoute(builder: (context) =>  MainScreen());
+    Timer(Duration(seconds: 2), () => Navigator.pushReplacement(context, route));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: Text("Get Started"),
-          onPressed: (){
-            final route = MaterialPageRoute(builder: (context) => MainScreen());
-            Navigator.of(context).push(route);
-          },
-        ),
-      ),
+      body: logoWidget,
     );
   }
+
+  Widget get logoWidget {
+    return Center(
+      child: Image.asset("assets/img/widcy_logo.jpg", height: 100, width: 100,),
+    );
+  }
+
 }
