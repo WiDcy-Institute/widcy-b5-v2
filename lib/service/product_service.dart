@@ -2,14 +2,13 @@ import 'dart:convert' as convert;
 
 import 'package:http/http.dart' as http;
 import 'package:widcy2/model/product.dart';
-
+import 'package:widcy2/util/Constant.dart' as constant;
 
 class ProductService {
 
-
   Future<List<Product>> loadProductList() async{
       try{
-        Uri uri = Uri.http("ec2-52-77-234-132.ap-southeast-1.compute.amazonaws.com", "mshop/api/product.php");
+        Uri uri = Uri.http(constant.baseURL, "mshop/api/product.php");
         var response = await http.get(uri);
         if(response.statusCode == 200){
           print(response.body);
@@ -26,7 +25,7 @@ class ProductService {
 
   Future<Product> addNewProduct(Product product) async{
     try{
-      Uri uri = Uri.http("ec2-52-77-234-132.ap-southeast-1.compute.amazonaws.com", "mshop/api/product.php");
+      Uri uri = Uri.http(constant.baseURL, "mshop/api/product.php");
       var headers = {
         "Access-Control-Allow-Origin": "*",
         'Content-Type': 'application/json',

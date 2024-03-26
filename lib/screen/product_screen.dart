@@ -3,8 +3,10 @@ import 'package:widcy2/model/product.dart';
 import 'package:widcy2/screen/product_add_new_screen.dart';
 import 'package:widcy2/screen/product_detail_screen.dart';
 import 'package:widcy2/service/product_service.dart';
+import 'package:widcy2/util/Constant.dart' as constant;
 
 class ProductScreen extends StatefulWidget {
+
   const ProductScreen({super.key});
 
   @override
@@ -75,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         title: Text(product.name!),
                         subtitle: Text("${product.price} ${product.currency}"),
                         leading: FadeInImage(
-                          image: NetworkImage("http://ec2-52-77-234-132.ap-southeast-1.compute.amazonaws.com/mshop/${product.image}"),
+                          image: NetworkImage("${constant.baseURL}/mshop/${product.image}"),
                           placeholder: AssetImage("assets/img/default_image.jpeg"),
                         ),
                         trailing: Icon(Icons.navigate_next),
